@@ -1,0 +1,26 @@
+{
+  "name": "fakesso",
+  "version": "0.0.0",
+  "description": "Fake Single-Sign On Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petermikitsh/fakesso.git"
+  },
+  "keywords": [
+    "sso",
+    "cas"
+  ],
+  "author": "Peter Mikitsh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/petermikitsh/fakesso/issues"
+  },
+  "homepage": "https://github.com/petermikitsh/fakesso#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
