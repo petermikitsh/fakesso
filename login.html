@@ -23,6 +23,10 @@
         <td>testuser3</td>
         <td>password3</td>
       </tr>
+      <tr>
+        <td>testuser4</td>
+        <td>password4</td>
+      </tr>
     </table>
     <script>
 
@@ -36,16 +40,16 @@
         return null;
       };
 
-      var input = document.createElement("input");
-      input.name = "service";
-      input.type = "hidden";
-      input.value = getQueryVariable('service');
-      document.forms[0].appendChild(input);
-
-      if (getQueryVariable('logout') == 'true') {
-        var flash = document.createElement('h5');
-        flash.innerHTML = 'You have been logged out.';
-        document.body.appendChild(flash);
+      var queryParams = ['service', 'RelayState'];
+      for (var i = 0; i < queryParams.length; i++) {
+        var queryParam = queryParams[i];
+        if (getQueryVariable(queryParam)) {
+          var input = document.createElement('input');
+          input.name = queryParam;
+          input.type = 'hidden';
+          input.value = getQueryVariable(queryParam);
+          document.forms[0].appendChild(input);
+        }
       }
 
     </script>

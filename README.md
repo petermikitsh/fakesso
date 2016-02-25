@@ -35,9 +35,10 @@ Endpoints
 
 Login form page.
 
-| Name    | Type   | Located In | Description                           | Required |
-|---------|--------|------------|---------------------------------------|----------|
-| service | string | query      | URL to redirect to on successful auth | true     |
+| Name       | Type   | Located In | Description                           | Required |
+|------------|--------|------------|---------------------------------------|----------|
+| service    | string | query      | URL to redirect to on successful auth | true     |
+| RelayState | string | query      | Passed to service url as query param  | false    |
 
 ## POST /
 

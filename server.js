@@ -19,7 +19,11 @@ app.use(session({
 var tickets = {};
 
 app.get('/', function (req, res) {
-  res.sendFile('login.html', {root: __dirname});
+  if (req.session.ticket) {
+    res.redirect(getRedirectURL(req));
+  } else {
+    res.sendFile('login.html', {root: __dirname});
+  }
 });
 
 function validCredentials (credentials) {
@@ -31,14 +35,32 @@ function validCredentials (credentials) {
   }
 }
 
-app.post('/', function (req, res) {
-  if (req.session.ticket && req.body.service) {
-    res.redirect(req.body.service + '/?ticket=' + req.session.ticket);
-  } else if (validCredentials(req.body) && req.body.service) {
+function makeTicket (req) {
+  if (!req.session.ticket) {
     var ticket = crypto.randomBytes(20).toString('hex');
     req.session.ticket = ticket;
     tickets[ticket] = users[req.body.username];
-    res.redirect(req.body.service + '/?ticket=' + ticket);
+  }
+}
+
+function getRedirectURL (req) {
+  var service = req.body.service || req.query.service;
+  var RelayState = req.body.RelayState || req.query.RelayState;
+  if (!service) {
+    return '/';
+  } else {
+    var url = service + '/?ticket=' + req.session.ticket;
+    if (req.body.RelayState) {
+      url += '&RelayState=' + RelayState;
+    }
+    return url;
+  }
+}
+
+app.post('/', function (req, res) {
+  if (validCredentials(req.body)) {
+    makeTicket(req);
+    res.redirect(getRedirectURL(req));
   } else {
     res.redirect('/');
   }
@@ -46,7 +68,7 @@ app.post('/', function (req, res) {
 
 app.get('/logout', function (req, res) {
   if (req.session.ticket) {
-    delete tickets[req.session.ticket]
+    delete tickets[req.session.ticket];
   }
   req.session.destroy();
   res.redirect('/?logout=true');
@@ -67,6 +89,6 @@ app.get('/serviceValidate', function (req, res) {
   }
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(process.env.PORT || 3000, function () {
+  console.log('SSO Server running on Port 3000.');
 });
