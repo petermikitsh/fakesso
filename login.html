@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Login to Continue</h1>
+    <form method='post' action='/'>
+      <p>
+        Username: <input type='text' name='username'><br>
+        Password: <input type='password' name='password'>
+      </p>
+      <div><input type='submit' value='Login'></div>
+    </form>
+    <p><b>Accounts</b><p>
+    <table>
+      <tr>
+        <td>testuser1</td>
+        <td>password1</td>
+      </tr>
+      <tr>
+        <td>testuser2</td>
+        <td>password2</td>
+      </tr>
+      <tr>
+        <td>testuser3</td>
+        <td>password3</td>
+      </tr>
+    </table>
+    <script>
+
+      function getQueryVariable (variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split("=");
+          if (pair[0] == variable) { return pair[1]; }
+        }
+        return null;
+      };
+
+      var input = document.createElement("input");
+      input.name = "service";
+      input.type = "hidden";
+      input.value = getQueryVariable('service');
+      document.forms[0].appendChild(input);
+
+      if (getQueryVariable('logout') == 'true') {
+        var flash = document.createElement('h5');
+        flash.innerHTML = 'You have been logged out.';
+        document.body.appendChild(flash);
+      }
+
+    </script>
+  </body>
+</html>

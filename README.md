@@ -3,8 +3,10 @@ fakesso
 
 A fake single-sign on server. Currently supports:
 
-- [ ] CAS
+- [X] CAS
 - [ ] SAML
+
+Do not use this service in a production setting.
 
 Getting Started
 ---------------
