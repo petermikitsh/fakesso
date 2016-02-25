@@ -2,6 +2,7 @@ var bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser')
     crypto = require('crypto'),
     express = require('express'),
+    o2x = require('object-to-xml'),
     session = require('express-session'),
     users = require('./users').getUsers();
 
@@ -80,7 +81,11 @@ app.get('/serviceValidate', function (req, res) {
     if (user) {
       var userCopy = JSON.parse(JSON.stringify(user));
       delete userCopy.password;
-      res.json(userCopy);
+      res.set('Content-Type', 'text/xml');
+      res.send(o2x({ 
+        '?xml version=\"1.0\" encoding=\"iso-8859-1\"?' : null,
+        request: userCopy
+      }));
     } else {
       res.sendStatus(404);
     }
