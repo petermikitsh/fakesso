@@ -6,6 +6,8 @@ A fake single-sign on server. Currently supports:
 - [X] CAS
 - [ ] SAML
 
+![Screenshot](https://raw.githubusercontent.com/petermikitsh/fakesso/master/login_screen.png)
+
 Do not use this service in a production setting.
 
 Getting Started
