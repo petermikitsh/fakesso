@@ -55,6 +55,17 @@ Validate a user's ticket. Response JSON includes username, e-mail address, etc.
 |----------|--------|------------|------------------------------------------|----------|
 | ticket   | string | query      | Ticket from valid authentication request | true     |
 
-## /logout
+Example Response:
+
+```
+{
+  "username": "testuser1",
+  "email": "testuser1@test.com",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+
+## GET /logout
 
 Logout a user.
