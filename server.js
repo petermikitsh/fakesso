@@ -76,21 +76,35 @@ app.get('/logout', function (req, res) {
 });
 
 app.get('/serviceValidate', function (req, res) {
+  res.set('Content-Type', 'text/xml');
   if (req.query.ticket) {
     var user = tickets[req.query.ticket];
     if (user) {
-      var userCopy = JSON.parse(JSON.stringify(user));
-      delete userCopy.password;
-      res.set('Content-Type', 'text/xml');
       res.send(o2x({ 
-        '?xml version=\"1.0\" encoding=\"iso-8859-1\"?' : null,
-        request: userCopy
+        "cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'": {
+          "cas:authenticationSuccess": {
+            "cas:uid": user.username,
+            "cas:mail": user.email,
+            "cas:givenName": user.firstName,
+            "cas:sn": user.lastName
+          }
+        }
       }));
     } else {
-      res.sendStatus(404);
+      res.send(o2x({
+        "cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'": {
+          "cas:authenticationFailure code='INVALID_TICKET'":
+            "ticket '" + req.query.ticket + "' not recognized"
+        }
+      }));
     }
   } else {
-    res.sendStatus(400);
+    res.send(o2x({
+      "cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'": {
+        "cas:authenticationFailure code='INVALID_REQUEST'":
+          "'ticket' parameter required"
+      }
+    }));
   }
 });
 
