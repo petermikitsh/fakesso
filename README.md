@@ -33,9 +33,9 @@ Endpoints
 
 Login form page.
 
-| Name  | Type   | Located In | Description                           | Required |
-|-------|--------|------------|---------------------------------------|----------|
-| query | string | query      | URL to redirect to on successful auth | true     |
+| Name    | Type   | Located In | Description                           | Required |
+|---------|--------|------------|---------------------------------------|----------|
+| service | string | query      | URL to redirect to on successful auth | true     |
 
 ## POST /
 
