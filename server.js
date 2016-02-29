@@ -50,7 +50,7 @@ function getRedirectURL (req) {
   if (!service) {
     return '/';
   } else {
-    var url = service + '?ticket=' + req.session.ticket;
+    var url = decodeURIComponent(service) + '?ticket=' + req.session.ticket;
     if (RelayState) {
       url += '&RelayState=' + RelayState;
     }
